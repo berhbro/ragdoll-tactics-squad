@@ -15,7 +15,7 @@
 ## 快速开始
 
 ```bash
-cd WebFormat/ragdoll-tactics-squad
+cd ragdoll-tactics-squad
 npm install
 npm run dev
 # 浏览器打开终端输出的地址（默认 http://localhost:5173）
@@ -144,3 +144,15 @@ src/
 - 演示模式按新电台路线跑通：排雷 → 交火 → 占领 → 胜利结算，并完整展示 HUD、排雷进度和占领进度。
 
 如果要在自己的机器上复现一次完整流程，建议先 `npm run dev`，用正常模式打一局；也可以从开始菜单点“观看演示”。
+
+## 部署到 GitHub Pages
+
+本项目提供了 GitHub Actions 工作流 `.github/workflows/deploy.yml`，推送到 `main` 分支后会自动安装依赖、构建并部署，无需手动提交构建产物。
+
+1. 将项目推送到 GitHub 的 `main` 分支。
+2. 在仓库的 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
+3. 在 **Actions** 页面查看 **Deploy to GitHub Pages** 工作流；如需重新部署，可手动运行该工作流。
+4. 当前仓库对应的预计地址是 `https://berhbro.github.io/ragdoll-tactics-squad/`；实际地址以 Pages 设置或部署结果为准。
+
+使用 Node.js 24 及 npm：本地运行 `npm ci`（或 `npm install`），再运行 `npm run dev`。本地构建使用 `npm run build`，用 `npm run preview` 预览。Vite 使用相对资源路径，适用于 GitHub Pages 仓库子路径。
+
