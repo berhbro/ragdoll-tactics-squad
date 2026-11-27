@@ -1,0 +1,244 @@
+:root {
+  --bg: #10140f;
+  --panel: rgba(16, 21, 15, 0.86);
+  --line: rgba(197, 208, 166, 0.2);
+  --text: #e8edda;
+  --muted: #a5b096;
+  --amber: #e8c35a;
+  --red: #e56a5b;
+  --green: #8fd47a;
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #10140f;
+  color: var(--text);
+  font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+canvas {
+  display: block;
+  outline: none;
+}
+
+#app {
+  position: relative;
+}
+
+#ui-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+#ui-root button {
+  font: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* The teammate menus/HUD own their visual language in ui.css. This file only
+   defines the shared frame and the small facade extras layered around them. */
+.overlay {
+  pointer-events: auto;
+}
+
+/* ---------------------------------------------------------- mission status */
+.rts-status {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 7;
+  text-align: center;
+  padding: 7px 26px 9px;
+  background: linear-gradient(180deg, rgba(13, 18, 12, 0.7), rgba(13, 18, 12, 0.18));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  pointer-events: none;
+}
+
+.mission-timer {
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+.objective {
+  color: #c7d0b8;
+  font-size: 12px;
+  margin-top: 1px;
+  text-shadow: 0 1px 5px #000;
+}
+
+.demo-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 9px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #201b0a;
+  background: var(--amber);
+  border-radius: 99px;
+  font-weight: 700;
+}
+
+.demo-exit {
+  position: absolute;
+  top: 7px;
+  left: calc(100% + 10px);
+  white-space: nowrap;
+  border: 1px solid rgba(232, 237, 218, 0.58);
+  border-radius: 99px;
+  padding: 4px 10px;
+  background: rgba(10, 14, 9, 0.82);
+  color: var(--text);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.demo-exit:hover,
+.demo-exit:focus-visible {
+  border-color: var(--amber);
+  color: #fff3c6;
+}
+
+/* ---------------------------------------------------------- action / toast */
+.rts-toast {
+  position: absolute;
+  left: 50%;
+  top: 118px;
+  transform: translateX(-50%) translateY(-4px);
+  z-index: 9;
+  max-width: min(620px, 76vw);
+  padding: 9px 18px;
+  border-radius: 8px;
+  background: rgba(9, 13, 8, 0.87);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.rts-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.rts-toast.is-warn {
+  border-color: rgba(229, 106, 91, 0.55);
+  color: #ffd7d0;
+}
+
+.rts-toast.is-success {
+  border-color: rgba(143, 212, 122, 0.5);
+  color: #dcf7d3;
+}
+
+.rts-action {
+  position: absolute;
+  left: 50%;
+  bottom: 104px;
+  transform: translateX(-50%);
+  z-index: 9;
+  width: 290px;
+  padding: 9px 12px;
+  background: rgba(10, 14, 9, 0.86);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.action-label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text);
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.action-track {
+  height: 5px;
+  border-radius: 99px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.action-fill {
+  height: 100%;
+  width: 0;
+  background: var(--amber);
+  transition: width 0.1s linear;
+}
+
+/* -------------------------------------------------------------- selection */
+.rts-selection {
+  position: absolute;
+  display: none;
+  z-index: 9;
+  border: 1px solid rgba(143, 212, 122, 0.9);
+  background: rgba(143, 212, 122, 0.09);
+  box-shadow: 0 0 0 1px rgba(10, 20, 10, 0.25) inset;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- loading */
+.rts-loading {
+  z-index: 40 !important;
+}
+
+.loading-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-radius: 10px;
+  background: rgba(12, 16, 11, 0.95);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(232, 195, 90, 0.25);
+  border-top-color: var(--amber);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

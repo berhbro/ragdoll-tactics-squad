@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DemoScript",
+  "type": "object",
+  "required": ["seed", "actions"],
+  "properties": {
+    "seed": { "type": "number" },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["t", "action"],
+        "properties": {
+          "t": { "type": "number", "minimum": 0 },
+          "action": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["type", "unitIds"],
+                "properties": {
+                  "type": { "const": "select" },
+                  "unitIds": { "type": "array", "items": { "type": "string" } }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["type", "unitIds", "position"],
+                "properties": {
+                  "type": { "const": "move" },
+                  "unitIds": { "type": "array", "items": { "type": "string" } },
+                  "position": { "$ref": "#/definitions/vec3" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["type", "unitIds", "position"],
+                "properties": {
+                  "type": { "const": "queueMove" },
+                  "unitIds": { "type": "array", "items": { "type": "string" } },
+                  "position": { "$ref": "#/definitions/vec3" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["type", "targetType", "targetId"],
+                "properties": {
+                  "type": { "const": "interact" },
+                  "targetType": { "enum": ["enemy", "downedAlly", "mine"] },
+                  "targetId": { "type": "string" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["type", "ms"],
+                "properties": {
+                  "type": { "const": "wait" },
+                  "ms": { "type": "number" }
+                }
+              },
+              {
+                "type": "object",
+                "required": ["type"],
+                "properties": { "type": { "const": "capture" } }
+              },
+              {
+                "type": "object",
+                "required": ["type", "result"],
+                "properties": {
+                  "type": { "const": "end" },
+                  "result": { "enum": ["win", "lose"] }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "vec3": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+      }
+    }
+  }
+}

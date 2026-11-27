@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LevelData",
+  "type": "object",
+  "required": ["playerSpawn", "radio", "covers", "fixedMines", "randomMines", "randomMineSeed", "enemies"],
+  "properties": {
+    "playerSpawn": { "$ref": "#/definitions/vec3" },
+    "radio": {
+      "type": "object",
+      "required": ["position", "radius"],
+      "properties": {
+        "position": { "$ref": "#/definitions/vec3" },
+        "radius": { "type": "number", "minimum": 0 }
+      }
+    },
+    "covers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["position", "size", "type"],
+        "properties": {
+          "position": { "$ref": "#/definitions/vec3" },
+          "size": { "$ref": "#/definitions/vec3" },
+          "type": { "enum": ["tree", "wall", "rock"] }
+        }
+      }
+    },
+    "fixedMines": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "position"],
+        "properties": {
+          "id": { "type": "string" },
+          "position": { "$ref": "#/definitions/vec3" }
+        }
+      }
+    },
+    "randomMines": {
+      "type": "object",
+      "required": ["candidateAreas", "candidatePoints", "boundary", "count"],
+      "properties": {
+        "candidateAreas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["center", "radius"],
+            "properties": {
+              "center": { "$ref": "#/definitions/vec3" },
+              "radius": { "type": "number", "minimum": 0 }
+            }
+          }
+        },
+        "candidatePoints": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/vec3" }
+        },
+        "boundary": {
+          "type": "object",
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "$ref": "#/definitions/vec3" },
+            "max": { "$ref": "#/definitions/vec3" }
+          }
+        },
+        "count": { "const": 2 }
+      }
+    },
+    "randomMineSeed": { "type": "number" },
+    "enemies": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "spawn"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["sentinel", "patrol", "elite"] },
+          "spawn": { "$ref": "#/definitions/vec3" },
+          "patrolPoints": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/vec3" }
+          },
+          "defenseArea": {
+            "type": "object",
+            "required": ["center", "radius"],
+            "properties": {
+              "center": { "$ref": "#/definitions/vec3" },
+              "radius": { "type": "number" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "vec3": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+      }
+    }
+  }
+}
