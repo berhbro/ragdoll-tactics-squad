@@ -14,9 +14,15 @@
 
 ## 快速开始
 
+### 线上试玩
+
+直接访问 https://berhbro.github.io/ragdoll-tactics-squad/
+
+### 本地部署
+
+本地浏览器游玩：
 ```bash
-cd ragdoll-tactics-squad
-npm install
+npm ci
 npm run dev
 # 浏览器打开终端输出的地址（默认 http://localhost:5173）
 ```
@@ -147,12 +153,24 @@ src/
 
 ## 部署到 GitHub Pages
 
-本项目提供了 GitHub Actions 工作流 `.github/workflows/deploy.yml`，推送到 `main` 分支后会自动安装依赖、构建并部署，无需手动提交构建产物。
+本项目提供了 GitHub Actions 工作流 `.github/workflows/deploy.yml`，推送到 `main` 分支后会自动安装依赖、构建并部署，无需手动提交构建产物。仓库当前不包含 `dist/`；每次推送 `main` 由 Actions 重新构建并发布。
 
 1. 将项目推送到 GitHub 的 `main` 分支。
 2. 在仓库的 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。
 3. 在 **Actions** 页面查看 **Deploy to GitHub Pages** 工作流；如需重新部署，可手动运行该工作流。
-4. 当前仓库对应的预计地址是 `https://berhbro.github.io/ragdoll-tactics-squad/`；实际地址以 Pages 设置或部署结果为准。
+4. 当前线上试玩地址：https://berhbro.github.io/ragdoll-tactics-squad/
 
 使用 Node.js 24 及 npm：本地运行 `npm ci`（或 `npm install`），再运行 `npm run dev`。本地构建使用 `npm run build`，用 `npm run preview` 预览。Vite 使用相对资源路径，适用于 GitHub Pages 仓库子路径。
+
+## CI/CD exploration
+
+- Inspected deployment: run `45965805791`（`Deploy to GitHub Pages`），commit `57a7453…`
+- Trigger: workflow_dispatch
+- Steps observed: checkout → setup-node → npm ci → npm run build → upload-pages-artifact → deploy-pages
+- Published files: dist 构建产物，线上 `index.html` 实际引用 index-DpxRI23W.js，index-CBdbxATz.css
+- Automatic vs manual: 人工点击 Run workflow，构建与部署全自动，自动触发仅 main 分支
+- Checks that actually ran: tsc, 作为 `npm run build` 的一部分, 无 lint、无 test
+- Missing check worth adding: smoke test after deployment
+
+
 
