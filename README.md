@@ -156,3 +156,6 @@ src/
 
 使用 Node.js 24 及 npm：本地运行 `npm ci`（或 `npm install`），再运行 `npm run dev`。本地构建使用 `npm run build`，用 `npm run preview` 预览。Vite 使用相对资源路径，适用于 GitHub Pages 仓库子路径。
 
+## 已知限制
+
+1. 演示视频没有进度条／暂停按钮。
